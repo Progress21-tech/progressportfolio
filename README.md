@@ -1,109 +1,80 @@
 <div align="center">
+# Progress — Portfolio v3
 
-# Progress — Portfolio
+### Designer & Developer · ProbeTech · Lagos, Nigeria
 
-### Designer &amp; Developer · Founder of ProbeTech · Lagos, Nigeria
+A techy, universe-themed portfolio built as a full-screen, page-by-page experience
+with GSAP scroll choreography, a 3D cosmic intro, and a custom contact backend.
 
-I design and build fast, modern websites and apps that help businesses win customers and ship ideas.
-
-**[ View Live Demo → ](#)** &nbsp;·&nbsp; _(deploy to Vercel, then paste your link here)_
+**[ View Live Demo → ](#)** _(deploy to Vercel, then paste your link here)_
+>>>>>>> f624106 (Made changes to the backend)
 
 </div>
 
----
+## ✦ The experience, screen by screen
 
-## ✦ About this site
+1. **Intro** — `[ PROGRESS ]` in Orbitron over a blurred 3D cosmic field. A navbar sits on top (Progress left, links right).
+2. **Three narrative beats** — *each is its own full screen*. The headline is bold from the start; the body text begins **faint and thin**, and as you scroll it **develops — becoming bolder and more solid** — and only once it's fully "written in" does the screen release to the next beat. A progress bar at the bottom shows how developed the current beat is.
+3. **Warp transition** — a travel-through-space moment into the work.
+4. **Selected Works** — EventFlow, MediConnect, KOLA, each with Case Study + Live Demo links.
+5. **Contact** — full screen, with a form (name, email, project type, message) wired to the custom backend.
 
-This is my personal portfolio — and it's also a working demonstration of how I build. It's a single-page site featuring a **live 3D hero** (an interactive, mouse-reactive particle field built with React Three Fiber), a selected-work section with detailed case studies, and a refined editorial aesthetic in dark tones with an amber accent.
+## ✦ Fonts
+- **Orbitron** — the name, headings, project titles (techy/sci-fi).
+- **Rajdhani** — body text (techy but readable).
+- **JetBrains Mono** — small technical labels.
 
-I built it to do double duty: house my work, and *be* a piece of my work.
+To change fonts: edit `--display` and `--body` at the top of `src/index.css`, and update the `<link>` in `index.html`.
 
-## ✦ Highlights
+## ✦ Run it (Codespaces or local)
 
-- **Live, interactive 3D hero** — an amber particle field that tilts toward your cursor, with a hoverable wireframe object, rendered with React Three Fiber (Three.js).
-- **Performance-conscious** — pixel ratio is capped for smooth rendering on mobile, the primary way my audience browses.
-- **Scroll-reveal animations** — sections fade and rise into view via a reusable IntersectionObserver hook.
-- **Component-driven** — case studies are data-driven, so the content is easy to edit without touching layout code.
-- **Fully responsive** — designed mobile-first.
-
-## ✦ Built with
-
-| Layer | Tools |
-|---|---|
-| Framework | React 18 + Vite |
-| 3D | Three.js · React Three Fiber · drei |
-| Styling | Hand-written CSS with design tokens (CSS variables) |
-| Type | Fraunces (display) · Manrope (body) · Space Mono (accents) |
-| Deploy | Vercel _(planned)_ |
-
-## ✦ Selected work featured
-
-- **EventFlow** — a premium, motion-driven marketing site for an event company.
-- **MediConnect** — a full EMR platform (web + mobile) with secure auth and a production backend.
-- **ProbeTech CMS** — a custom CMS with role-based access, built so a client team can manage their own content.
-- **KOLA** — a credit-scoring platform that turns informal savings-group participation into a usable credit signal.
-
----
-
-## ✦ Run it locally / in GitHub Codespaces
-
-No local setup needed if you use Codespaces — it runs entirely in the browser.
-
-### In GitHub Codespaces
-1. Open this repo's **Code** button → **Codespaces** tab → **Create codespace on main**.
-2. In the terminal, run:
-   ```bash
-   npm install
-   npm run dev
-   ```
-3. When the port-forwarding popup appears, click **Open in Browser**.
-
-### On your own machine
+Frontend:
 ```bash
-git clone https://github.com/YOUR-USERNAME/probetech-site.git
-cd probetech-site
 npm install
 npm run dev
 ```
+> The pinned scroll + 3D only feel right when actually running — view it in the browser, not just the code.
+
+Backend (contact form) — see `server/README.md`. Create a `.env` here with:
+```
+VITE_API_URL=https://progressportfolio.onrender.com
+```
+
+## ✦ ✎ Placeholders to replace
+- `hello@yourdomain.com` — your real email (`Home.jsx`, `ContactForm.jsx`, `CaseStudyEventFlow.jsx`).
+- `#` demo links + MediConnect/KOLA case study links — in the `PROJECTS` array in `src/pages/Home.jsx`. Only EventFlow has a full case-study page so far; MediConnect & KOLA point to `#` until you build theirs.
+- EventFlow case study — fill the **✎ REPLACE** boxes in `src/pages/CaseStudyEventFlow.jsx`.
+
+## ✦ Editing content
+- **Narrative beats** → `BEATS` array in `src/pages/Home.jsx`.
+- **Scroll length per beat** → the `.beat-pin { height: 300vh }` in `index.css` (taller = more scrolling to develop the text; lower it to ~200vh if it feels too long).
+- **Projects** → `PROJECTS` array in `src/pages/Home.jsx`.
+- **Colors** → CSS variables at top of `src/index.css`.
+
+## ✦ Note on the pinned scroll
+The "develop the text, then advance" effect uses GSAP ScrollTrigger pinning. It's striking but is a deliberate scroll-jacking pattern — test it on a phone, and if any beat feels too long, reduce `.beat-pin` height. Respects normal scrolling otherwise.
 
 ## ✦ Project structure
-
 ```
-probetech-site/
-├── index.html
-├── package.json
-├── vite.config.js
-└── src/
-    ├── main.jsx            # entry point
-    ├── App.jsx             # assembles all sections
-    ├── index.css           # design tokens + all styles
-    └── components/
-        ├── Nav.jsx
-        ├── Hero.jsx        # ← the 3D hero lives here
-        ├── Work.jsx        # ← case studies (edit the CASES array)
-        ├── Sections.jsx    # approach, about, contact, footer
-        └── useReveal.js    # scroll-reveal hook
+src/
+├── main.jsx                      # router
+├── index.css                     # theme + all styles (FONTS here)
+├── components/
+│   ├── Navbar.jsx                # top navbar
+│   ├── CosmicField.jsx           # 3D intro universe
+│   ├── WarpTunnel.jsx            # world-transition warp
+│   └── ContactForm.jsx           # contact form -> backend
+└── pages/
+    ├── Home.jsx                  # intro + pinned beats + projects + contact (GSAP here)
+    └── CaseStudyEventFlow.jsx    # detailed case study
+server/                           # Express + Supabase + Resend contact backend
 ```
-
-## ✦ Customising
-
-- **Colors & spacing** — edit the CSS variables at the top of `src/index.css`.
-- **Case studies** — edit the `CASES` array in `src/components/Work.jsx`.
-- **Contact details** — update the email and social links in `src/components/Sections.jsx`.
-- **The 3D** — tweak `count` in `ParticleField`, or swap `icosahedronGeometry` for another shape, in `src/components/Hero.jsx`.
 
 ## ✦ Deploy
-
-Push to GitHub, then import the repo into **Vercel** or **Netlify** (both auto-detect Vite).
-- Build command: `npm run build`
-- Output directory: `dist`
-
-Once deployed, paste your live URL into the demo link at the top of this file.
+Frontend → **Vercel**. Backend → **Render** (root dir `server`). Point them at each other with env vars. Details in `server/README.md`.
+>>>>>>> f624106 (Made changes to the backend)
 
 ---
 
 <div align="center">
-
-Designed &amp; built in Lagos · © 2026 Progress · ProbeTech
-
 </div>
